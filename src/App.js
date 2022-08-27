@@ -6,7 +6,8 @@ import Navbar from './Components/Navbar';
 import Users from './Components/Users';
 import Analysis from './Components/Analysis';
 import CustomiseUser from './Components/CustomiseUser';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <div>
@@ -17,6 +18,8 @@ function App() {
           <Route path='analysis' element={<Analysis></Analysis>}></Route>
           <Route path='customizeData' element={<CustomiseUser></CustomiseUser>}></Route>
       </Routes>
+
+      <ToastContainer />
     </div>
   );
 }

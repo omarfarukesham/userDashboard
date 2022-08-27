@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
     return (
         <div>
+            {/* navbar section code here -------------------------------  */}
             <div class="navbar bg-base-200">
                 <div class="navbar-start">
                     <div class="dropdown">
@@ -19,7 +20,6 @@ const Navbar = () => {
                 </div>
                 <div class="navbar-center">
                     <Link to='/' class="btn btn-ghost normal-case text-xl">Dashboard</Link>
-                    <Link to='/user' class="btn btn-ghost normal-case text-xl">User</Link>
                     <Link to='/analysis' class="btn btn-ghost normal-case text-xl">Analysis</Link>
                     <Link to='/customizeData' class="btn btn-ghost normal-case text-xl">CustomizeData</Link>
                 </div>
