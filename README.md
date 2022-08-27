@@ -37,7 +37,7 @@ Technologies make our application more usabele & fulfil our demand, in this app 
 
 
 ## App Exclusive feature
--This app will help you use payment globally which is very awesome feature for this app..
+-THIS APP HAS DASHBOARD FILTERING PROCESS WHICH YOU CAN FIND USER ACCORDING TO YOU DEMAND..
 
 ![App Screenshot](https://i.ibb.co/JyfXxqS/user-Dashboar.png)
 
