@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Home = () => {
     const [users, setUsers] = useState([])
     const [sortText, setSortText] = useState('')
+    const [modalhandler, setModalHander] = useState({})
 
     useEffect(() => {
 
@@ -52,6 +53,22 @@ const Home = () => {
     const sortHandler = (e) => {
         setSortText(e.target.value)
     }
+    
+    const deleteUser = (id) => {
+        const proceed = window.confirm("Are you sure for Delete .........");
+        if (proceed) {
+            const url = ` http://localhost:5000/removeMaster/${id}`;
+            fetch(url, {
+                method: "delete",
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    const remaining = users.filter((prod) => prod._id !== id);
+                    setUsers(remaining);
+
+                });
+        }
+    }
     return (
         <>
 
@@ -86,18 +103,15 @@ const Home = () => {
                                 <small className='font-bold text-primary'>Country :{pd?.Country}</small>
                                 <p>Device :{
                                     pd?.Device === '2XL' ? 'Laptop' : 'Mobile'
-
-
-
                                 }</p>
                                 <p>Sex :{pd?.gender}</p>
                                 <small>DailyUser :{
                                      pd?.dailyUser 
                                     }</small>
                                 <div class="card-actions justify-around">
-                                    <label class="btn btn-primary  modal-button btn-xs text-white">Details</label>
+                                    <label onClick={()=>setModalHander(pd)} for="my-modal-6" class="btn btn-primary  modal-button btn-xs text-white">Details</label>
                                     {/* <button for="my-modal-6" class="btn btn-primary  modal-button btn-xs text-white">Details</button> */}
-                                    <button class="btn btn-error btn-xs text-white">Delete</button>
+                                    <button onClick={() => deleteUser(pd._id)} class="btn btn-error btn-xs text-white">Delete</button>
                                 </div>
 
                             </div>
@@ -108,6 +122,21 @@ const Home = () => {
                 }
 
 
+            </div>
+            <div>
+            <input type="checkbox" id="my-modal-6" class="modal-toggle" />
+                    <div class="modal modal-bottom sm:modal-middle">
+                        <div class="modal-box">
+                            <figure><img src={modalhandler?.img} alt="Shoes" /></figure>
+                            <h3 class="font-bold text-lg">Brand -----{modalhandler?.Country}</h3>
+                            <h3 class="font-bold text-lg">Model -----{modalhandler?.Device}</h3>
+                            <p class="py-4">Price ------{modalhandler?.Invest}</p>
+                       
+                            <div class="modal-action">
+                                <label for="my-modal-6" class="btn">Close!</label>
+                            </div>
+                        </div>
+                    </div>
             </div>
 
 
