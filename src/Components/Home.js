@@ -8,7 +8,7 @@ const Home = () => {
 
     //all data load from database hooks here .....................................
     useEffect(() => {
-        fetch('http://localhost:5000/master')
+        fetch('https://serene-headland-23680.herokuapp.com/master')
             .then(res => res.json())
             .then(data => setUsers(data.slice(0, 100)))
 
@@ -17,7 +17,7 @@ const Home = () => {
 
     //user sorting  hooks here ......................................................
     useEffect(() => {
-        fetch('http://localhost:5000/master')
+        fetch('https://serene-headland-23680.herokuapp.com/master')
             .then(res => res.json())
             .then(data => {
                 if (sortText == '') {
@@ -62,7 +62,7 @@ const Home = () => {
     const deleteUser = (id) => {
         const proceed = window.confirm("Are you sure for Delete .........");
         if (proceed) {
-            const url = ` http://localhost:5000/removeMaster/${id}`;
+            const url = ` https://serene-headland-23680.herokuapp.com/removeMaster/${id}`;
             fetch(url, {
                 method: "delete",
             })

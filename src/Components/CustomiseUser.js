@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { toast  } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const CustomiseUser = () => {
     const [users, setUsers] = useState([])
@@ -7,53 +7,16 @@ const CustomiseUser = () => {
 
     //data retrive hooks from database for table user ..................................
     useEffect(() => {
-        fetch('http://localhost:5000/master')
+        fetch('https://serene-headland-23680.herokuapp.com/master')
             .then(res => res.json())
             .then(data => setUsers(data.slice(0, 50)))
 
     }, [])
+    //update handler user data start here..............................................
 
-    //update handler user data start here...............................
- //update items handler code here
- const updateHandler = (e) => {
-    e.preventDefault();
-    const Nmae = e.target.name.value;
-    const img = e.target.Image.value;
-    const Country = e.target.Country.value;
-    const gender = e.target.Gender.value;
-    const Device = e.target.Device.value;
-    const Profession = e.target.Profession.value;
-    const dailyUse = e.target.dailyUse.value;
-    const Invest = e.target.Invest.value;
-
-    const data = { Nmae, img, Country, gender, Device, Profession, dailyUse, Invest };
-    console.log(data);
-
-    fetch(
-      `http://localhost:5000/updateMaster/${modalhandler._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        const newUser = [...users, result];
-        setUsers(newUser);
-        toast.success("User Update successfully")
-       
-      });
-  };
-    //update handler user data end here...............................
-
-
-    //collect data from form and send it to server then mongodb start here 
-    const handleSubmit = (e) => {
+    //update items handler code here......................................................
+    const updateHandler = (e) => {
         e.preventDefault();
-        console.log('hi');
         const Nmae = e.target.name.value;
         const img = e.target.Image.value;
         const Country = e.target.Country.value;
@@ -66,8 +29,42 @@ const CustomiseUser = () => {
         const data = { Nmae, img, Country, gender, Device, Profession, dailyUse, Invest };
         console.log(data);
 
+        fetch(
+            `https://serene-headland-23680.herokuapp.com/updateMaster/${modalhandler._id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        )
+            .then((res) => res.json())
+            .then((result) => {
+                const newUser = [...users, result];
+                setUsers(newUser);
+                toast.success("User Update successfully")
 
-        fetch("http://localhost:5000/master", {
+            });
+    };
+    //update handler user data end here.................................................
+
+
+    //collect data from form and send it to server then mongodb start here .................
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const Nmae = e.target.name.value;
+        const img = e.target.Image.value;
+        const Country = e.target.Country.value;
+        const gender = e.target.Gender.value;
+        const Device = e.target.Device.value;
+        const Profession = e.target.Profession.value;
+        const dailyUse = e.target.dailyUse.value;
+        const Invest = e.target.Invest.value;
+
+        const data = { Nmae, img, Country, gender, Device, Profession, dailyUse, Invest };
+
+        fetch("https://serene-headland-23680.herokuapp.com/master", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -82,13 +79,13 @@ const CustomiseUser = () => {
                 e.target.reset();
             });
     };
-    //collect data from form and send it to server then mongodb end here 
+    //collect data from form and send it to server then mongodb end here ...................
 
-    //Remove data from table and database start here 
+    //Remove data from table and database start here .......................................
     const deleteUser = (id) => {
         const proceed = window.confirm("Are you sure for Remove .........");
         if (proceed) {
-            const url = ` http://localhost:5000/removeMaster/${id}`;
+            const url = ` https://serene-headland-23680.herokuapp.com/removeMaster/${id}`;
             fetch(url, {
                 method: "delete",
             })
@@ -100,15 +97,16 @@ const CustomiseUser = () => {
                 });
         }
     }
-    //Remove data from table and database end here 
+    //Remove data from table and database end here ........................................
+
+
+
     return (
         <div>
             {/* New user add section start here  */}
             <div>
                 <h3 className="text-center">Add Users</h3>
-                <div >
-
-
+                <div>
                     <form onSubmit={handleSubmit}>
                         <div class=" card-body form-control w-96 mx-auto bg-base-200">
                             <input type="text" name="name" placeholder="Name" required class="input input-bordered" />
@@ -197,31 +195,31 @@ const CustomiseUser = () => {
                     <div class="modal-box">
                         <figure><img src={modalhandler?.img} alt="Shoes" /></figure>
                         <form onSubmit={updateHandler}>
-                        <div class=" card-body form-control w-96 mx-auto bg-base-200">
-                            <input type="text" name="name" placeholder={modalhandler.Nmae} required class="input input-bordered" />
-                            <input type="text" name="Country" placeholder={modalhandler.Country} required class="input input-bordered" />
-                            <input type="url" name="Image" placeholder="New Url" required class="input input-bordered" />
-                            <select name="Gender" required class="select select-info w-full max-w-xs">
-                                <option disabled selected>Gender</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-                            <select name="Device" class="select select-info w-full max-w-xs">
-                                <option disabled selected>Device</option>
-                                <option>2XL</option>
-                                <option>XL</option>
-                            </select>
-                            <select name='dailyUse' required class="select select-info w-full max-w-xs">
-                                <option disabled selected>DailY Use</option>
-                                <option>true</option>
-                                <option>false</option>
-                            </select>
-                            <input type="text" required name="Profession" placeholder={modalhandler.Profession} class="input input-bordered" />
-                            <input type="number" name="Invest" placeholder="Invest" class="input input-bordered" />
-                            <button type="submit" class="btn btn-outline btn-primary">Edit USER</button>
-                        </div>
+                            <div class=" card-body form-control w-96 mx-auto bg-base-200">
+                                <input type="text" name="name" placeholder={modalhandler.Nmae} required class="input input-bordered" />
+                                <input type="text" name="Country" placeholder={modalhandler.Country} required class="input input-bordered" />
+                                <input type="url" name="Image" placeholder="New Url" required class="input input-bordered" />
+                                <select name="Gender" required class="select select-info w-full max-w-xs">
+                                    <option disabled selected>Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                                <select name="Device" class="select select-info w-full max-w-xs">
+                                    <option disabled selected>Device</option>
+                                    <option>2XL</option>
+                                    <option>XL</option>
+                                </select>
+                                <select name='dailyUse' required class="select select-info w-full max-w-xs">
+                                    <option disabled selected>DailY Use</option>
+                                    <option>true</option>
+                                    <option>false</option>
+                                </select>
+                                <input type="text" required name="Profession" placeholder={modalhandler.Profession} class="input input-bordered" />
+                                <input type="number" name="Invest" placeholder="Invest" class="input input-bordered" />
+                                <button type="submit" class="btn btn-outline btn-primary">Edit USER</button>
+                            </div>
 
-                    </form>
+                        </form>
 
                         <div class="modal-action">
                             <label for="my-modal-6" class="btn">Close!</label>
